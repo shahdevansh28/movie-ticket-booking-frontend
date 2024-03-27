@@ -45,9 +45,9 @@ function App() {
           <Route path="SeatLayout" element={<SeatLayoutAdmin />} />
           <Route path="Create-Admin" element={<CreateAdmin />} />
           <Route path="Bookings" element={<Bookings />} />
-          <Route path="My-Profile" element={<UserProfile />} /> 
+          <Route path="My-Profile" element={<UserProfile />} />
         </Route>
-        <Route path="/*" element={<PageNotFound/>}/>
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

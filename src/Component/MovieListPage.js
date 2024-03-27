@@ -8,11 +8,12 @@ import { Container, Grid, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import MoviePost from "./MoviePost";
+import { baseURL } from "../API";
 
 export default function MovieListPage() {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
-    axios.get("https://localhost:44397/api/Movie").then((response) => {
+    axios.get(`${baseURL}/api/Movie`).then((response) => {
       console.log(response.data);
       setMovies(response.data);
     });

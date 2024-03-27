@@ -15,6 +15,7 @@ import { TextField } from "@mui/material";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { DateTimePicker } from "@mui/x-date-pickers";
+import { baseURL } from "../../API";
 
 export default function UpdateShowTime() {
   let newObject = localStorage.getItem("showTime");
@@ -50,13 +51,13 @@ export default function UpdateShowTime() {
   }, []);
   //Fetches list of movies
   useEffect(() => {
-    axios.get("https://localhost:44397/api/Movie").then((response) => {
+    axios.get(`${baseURL}/api/Movie`).then((response) => {
       setMovieName(response.data);
     });
   }, []);
   //Fetches list of theaters
   useEffect(() => {
-    axios.get("https://localhost:44397/api/Theater").then((response) => {
+    axios.get(`${baseURL}/api/Theater`).then((response) => {
       console.log(response.data);
       setTheaterName(response.data);
     });
@@ -95,19 +96,16 @@ export default function UpdateShowTime() {
 
     if (!formDirty) {
       try {
-        const res = await axios.put(
-          `https://localhost:44397/api/ShowTime/${id}`,
-          {
-            Id: id,
-            showDate: new Date(showDate).toISOString(),
-            startTime: new Date(startTime).toISOString(),
-            endTime: new Date(endTime).toISOString(),
-            amount: showData.amount,
-            capacity: showData.capacity,
-            movieId: showData.movieId,
-            theaterId: showData.theaterId,
-          }
-        );
+        const res = await axios.put(`${baseURL}/api/ShowTime/${id}`, {
+          Id: id,
+          showDate: new Date(showDate).toISOString(),
+          startTime: new Date(startTime).toISOString(),
+          endTime: new Date(endTime).toISOString(),
+          amount: showData.amount,
+          capacity: showData.capacity,
+          movieId: showData.movieId,
+          theaterId: showData.theaterId,
+        });
         Swal.fire({
           position: "top-center",
           icon: "success",

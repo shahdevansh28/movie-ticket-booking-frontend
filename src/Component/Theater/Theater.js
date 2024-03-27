@@ -25,6 +25,7 @@ import {
   Grid,
   Checkbox,
 } from "@mui/material";
+import { baseURL } from "../../API";
 import Swal from "sweetalert2";
 
 export default function Theater() {
@@ -65,7 +66,7 @@ export default function Theater() {
 
     if (!formDirty) {
       try {
-        const res = await axios.post("https://localhost:44397/api/Theater", {
+        const res = await axios.post(`${baseURL}/api/Theater`, {
           name: theaterData.theaterName,
           location: theaterData.location,
         });
@@ -103,7 +104,7 @@ export default function Theater() {
 
   useEffect(() => {
     axios
-      .get("https://localhost:44397/api/Theater/api/get-show-by-theater")
+      .get(`${baseURL}/api/Theater/api/get-show-by-theater`)
       .then((response) => {
         console.log(response.data);
         setDetail(response.data);
@@ -117,7 +118,7 @@ export default function Theater() {
   };
 
   const getData = () => {
-    axios.get("https://localhost:44397/api/Theater").then((getData) => {
+    axios.get(`${baseURL}/api/Theater`).then((getData) => {
       setDetail(getData.data);
     });
   };
@@ -133,7 +134,7 @@ export default function Theater() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://localhost:44397/api/Theater/${id}`).then(() => {
+        axios.delete(`${baseURL}/api/Theater/${id}`).then(() => {
           getData();
         });
         Swal.fire({

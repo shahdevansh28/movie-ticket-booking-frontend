@@ -24,6 +24,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import Cookies from "js-cookie";
+import { baseURL } from "../../API";
 
 export default function Movie() {
   const [detail, setDetail] = useState([]);
@@ -39,12 +40,10 @@ export default function Movie() {
   );
 
   useEffect(() => {
-    axios
-      .get("https://localhost:44397/api/get-all-booking")
-      .then((response) => {
-        console.log(response.data);
-        setDetail(response.data);
-      });
+    axios.get(`${baseURL}/api/get-all-booking`).then((response) => {
+      console.log(response.data);
+      setDetail(response.data);
+    });
   }, []);
 
   //   console.log(new Date(date).toISOString());

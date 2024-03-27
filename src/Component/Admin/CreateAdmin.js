@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+import { baseURL } from "../../API";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -23,14 +24,11 @@ export default function CreateAdmin() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const res = await axios.post(
-        "https://localhost:44397/api/Auth/RegisterAdmin",
-        {
-          username: data.get("username"),
-          email: data.get("email"),
-          password: data.get("password"),
-        }
-      );
+      const res = await axios.post(`${baseURL}/api/Auth/RegisterAdmin`, {
+        username: data.get("username"),
+        email: data.get("email"),
+        password: data.get("password"),
+      });
       console.log(res);
     } catch (err) {
       console.log(err.response.status);
@@ -95,7 +93,6 @@ export default function CreateAdmin() {
                   autoComplete="new-password"
                 />
               </Grid>
-              
             </Grid>
             <Button
               type="submit"

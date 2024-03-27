@@ -20,6 +20,7 @@ import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
 import { set } from "react-hook-form";
 import LoginIcon from "@mui/icons-material/Login";
+import { baseURL } from "../API";
 import { InputLabel } from "@mui/material";
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -56,7 +57,7 @@ export default function SignIn() {
 
     if (!formDirty) {
       try {
-        const res = await axios.post("https://localhost:44397/api/Auth/Login", {
+        const res = await axios.post(`${baseURL}/api/Auth/Login`, {
           username: details.username,
           password: details.password,
         });

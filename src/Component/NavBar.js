@@ -20,6 +20,7 @@ export default function NavBar() {
   const pages = ["movies"];
   const auth = Cookies.get("token");
   const navigate = useNavigate();
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -42,7 +43,10 @@ export default function NavBar() {
     <Grid container>
       <Grid item xs={12}>
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static" style={{ backgroundColor: "#FFFFFF", boxShadow: 'none' }}>
+          <AppBar
+            position="static"
+            style={{ backgroundColor: "#FFFFFF", boxShadow: "none" }}
+          >
             <Toolbar>
               <IconButton
                 size="large"
@@ -84,7 +88,7 @@ export default function NavBar() {
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
                     onClick={handleMenu}
-                    color="inherit"
+                    color="black"
                   >
                     <AccountCircle />
                   </IconButton>
@@ -103,7 +107,6 @@ export default function NavBar() {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={handleProfile}>Profile</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </Menu>
                 </div>

@@ -10,6 +10,7 @@ import Session from "react-session-api";
 import Seat from "../Seat";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
+import { baseURL } from "../../API";
 import {
   Dialog,
   DialogActions,
@@ -46,15 +47,12 @@ export default function SeatLayoutAdmin(props) {
   const addSeatLayout = async () => {
     console.log("Add");
     try {
-      const res = await axios.post(
-        "https://localhost:44397/api/Seat/add-seat",
-        {
-          totalRow: seatLayoutData.totalRow,
-          totalCol: seatLayoutData.totalCol,
-          showTimeId: id,
-          isAvailable: false,
-        }
-      );
+      const res = await axios.post(`${baseURL}/api/Seat/add-seat`, {
+        totalRow: seatLayoutData.totalRow,
+        totalCol: seatLayoutData.totalCol,
+        showTimeId: id,
+        isAvailable: false,
+      });
       setOpen(false);
     } catch (err) {
       console.log(err);
@@ -76,14 +74,14 @@ export default function SeatLayoutAdmin(props) {
   };
 
   useEffect(() => {
-    axios.get(`https://localhost:44397/api/ShowTime/${id}`).then((response) => {
+    axios.get(`${baseURL}/api/ShowTime/${id}`).then((response) => {
       console.log(response.data);
     });
   }, [seatLayoutData]);
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44397/api/Seat/seat-layout?showTimeId=${id}`)
+      .get(`${baseURL}/api/Seat/seat-layout?showTimeId=${id}`)
       .then((response) => {
         console.log(response.data);
         if (response.data.length === 0) {

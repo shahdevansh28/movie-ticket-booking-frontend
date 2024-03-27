@@ -19,6 +19,7 @@ import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import { baseURL } from "../API";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CenterFocusStrong, Margin } from "@mui/icons-material";
@@ -29,7 +30,7 @@ export default function MovieList() {
   const [details, setDetail] = useState([]);
 
   useEffect(() => {
-    axios.get("https://localhost:44397/api/Movie").then((response) => {
+    axios.get(`${baseURL}/api/Movie`).then((response) => {
       console.log(response.data);
       setDetail(response.data);
     });

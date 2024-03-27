@@ -12,6 +12,7 @@ import Show from "./Show";
 import { useSearchParams } from "react-router-dom";
 import Session from "react-session-api";
 import { Stack, Typography } from "@mui/material";
+import { baseURL } from "../API";
 
 export default function ShowList(props) {
   const [date, setDate] = React.useState(dayjs(Date.now()));
@@ -23,7 +24,7 @@ export default function ShowList(props) {
   try {
     useEffect(() => {
       axios
-        .get(`https://localhost:44397/api/ShowTime/get-showtime-by-movie`, {
+        .get(`${baseURL}/api/ShowTime/get-showtime-by-movie`, {
           params: {
             id: queryParameters.get("movieId"),
             date: d,

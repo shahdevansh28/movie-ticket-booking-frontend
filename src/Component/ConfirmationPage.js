@@ -17,6 +17,7 @@ import Cookies from "js-cookie";
 import NavBar from "./NavBar";
 import Swal from "sweetalert2";
 import { Container, Grid, Stack } from "@mui/material";
+import { baseURL } from "../API";
 import Footer from "./Footer";
 
 export default function ConfirmationPage(props) {
@@ -42,7 +43,7 @@ export default function ConfirmationPage(props) {
   useEffect(() => {
     axios
       .get(
-        `https://localhost:44397/api/Movie/api/get-movieByshow?showTimeId=${showId}`
+        `${baseURL}/api/Movie/api/get-movieByshow?showTimeId=${showId}`
       )
       .then((response) => {
         setMovieData(response.data);
@@ -54,7 +55,7 @@ export default function ConfirmationPage(props) {
     event.preventDefault();
     try {
       const res = await axios.post(
-        `https://localhost:44397/api/book-ticket?userId=${id}`,
+        `${baseURL}/api/book-ticket?userId=${id}`,
         {
           showTimeId: Session.get("showTimeId"),
           seatNumber: Session.get("seatNumber"),
@@ -73,7 +74,7 @@ export default function ConfirmationPage(props) {
         //make payment request
         try {
           const paymentRes = await axios.post(
-            `https://localhost:44397/intitae-payment?userId=${id}`,
+            `${baseURL}/intitae-payment?userId=${id}`,
             {
               totalAmount: res.data.totalAmount,
               transactionID: res.data.transactionID,
@@ -174,7 +175,7 @@ export default function ConfirmationPage(props) {
   ) => {
     try {
       const res = await axios.post(
-        `https://localhost:44397/api/updateOnServer`,
+        `${baseURL}/api/updateOnServer`,
         {
           razorpay_payment_id: razorpayPaymentID,
           razorpay_order_id: razorpayOrderID,

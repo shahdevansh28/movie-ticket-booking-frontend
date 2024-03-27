@@ -27,6 +27,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import Swal from "sweetalert2";
+import { baseURL } from "../../API";
 
 export default function ShowTime() {
   const [detail, setDetail] = useState([]);
@@ -47,13 +48,13 @@ export default function ShowTime() {
   const [theaterError, setTheaterError] = useState("");
   //Fetches list of movies
   useEffect(() => {
-    axios.get("https://localhost:44397/api/Movie").then((response) => {
+    axios.get(`${baseURL}/api/Movie`).then((response) => {
       setMovieName(response.data);
     });
   }, []);
   //Fetches list of theaters
   useEffect(() => {
-    axios.get("https://localhost:44397/api/Theater").then((response) => {
+    axios.get(`${baseURL}/api/Theater`).then((response) => {
       console.log(response.data);
       setTheaterName(response.data);
     });
@@ -111,7 +112,7 @@ export default function ShowTime() {
 
     if (!formDirty) {
       try {
-        const res = await axios.post("https://localhost:44397/api/ShowTime", {
+        const res = await axios.post(`${baseURL}/api/ShowTime`, {
           showDate: new Date(showDate).toISOString(),
           startTime: new Date(startTime).toISOString(),
           endTime: new Date(endTime).toISOString(),
@@ -142,7 +143,7 @@ export default function ShowTime() {
 
   //Fetches List of ShowTime
   useEffect(() => {
-    axios.get("https://localhost:44397/api/ShowTime").then((response) => {
+    axios.get(`${baseURL}/api/ShowTime`).then((response) => {
       console.log(response.data);
       setDetail(response.data);
     });
@@ -156,7 +157,7 @@ export default function ShowTime() {
     let { id, name, description } = data;
   };
   const getData = () => {
-    axios.get("https://localhost:44397/api/ShowTime").then((getData) => {
+    axios.get(`${baseURL}/api/ShowTime`).then((getData) => {
       setDetail(getData.data);
     });
   };
@@ -172,7 +173,7 @@ export default function ShowTime() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://localhost:44397/api/ShowTime/${id}`).then(() => {
+        axios.delete(`${baseURL}/api/ShowTime/${id}`).then(() => {
           getData();
         });
         Swal.fire({

@@ -23,6 +23,7 @@ import {
   Grid,
   Checkbox,
 } from "@mui/material";
+import { baseURL } from "../../API";
 import Swal from "sweetalert2";
 
 export default function Movie() {
@@ -87,7 +88,7 @@ export default function Movie() {
     console.log(formDirty);
     if (!formDirty) {
       try {
-        const res = await axios.post("https://localhost:44397/api/Movie", {
+        const res = await axios.post(`${baseURL}/api/Movie`, {
           title: movieData.movieName,
           release_Date: new Date(date).toISOString(),
           duration: movieData.duration,
@@ -115,7 +116,7 @@ export default function Movie() {
   const discardMovie = (e) => {};
 
   useEffect(() => {
-    axios.get("https://localhost:44397/api/Movie").then((response) => {
+    axios.get(`${baseURL}/api/Movie`).then((response) => {
       console.log(response.data);
       setDetail(response.data);
     });
@@ -130,7 +131,7 @@ export default function Movie() {
   };
 
   const getData = () => {
-    axios.get("https://localhost:44397/api/Movie").then((getData) => {
+    axios.get(`${baseURL}/api/Movie`).then((getData) => {
       setDetail(getData.data);
     });
   };
@@ -146,7 +147,7 @@ export default function Movie() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`https://localhost:44397/api/Movie/${id}`).then(() => {
+        axios.delete(`${baseURL}/api/Movie/${id}`).then(() => {
           getData();
         });
         Swal.fire({

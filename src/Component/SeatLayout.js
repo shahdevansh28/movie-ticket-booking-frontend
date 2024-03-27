@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Session from "react-session-api";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
+import { baseURL } from "../API";
 
 export default function SeatLayout() {
   const [details, setDetail] = useState([]);
@@ -22,7 +23,7 @@ export default function SeatLayout() {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44397/api/Seat/seat-layout?showTimeId=${id}`)
+      .get(`${baseURL}/api/Seat/seat-layout?showTimeId=${id}`)
       .then((response) => {
         console.log(response.data);
         setDetail(response.data);

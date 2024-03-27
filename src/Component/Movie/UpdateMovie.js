@@ -14,6 +14,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TextField } from "@mui/material";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { baseURL } from "../../API";
 
 export default function UpdateMovie() {
   let newObject = localStorage.getItem("movie");
@@ -61,7 +62,7 @@ export default function UpdateMovie() {
 
     if (!formDirty) {
       try {
-        const res = await axios.put(`https://localhost:44397/api/Movie/${id}`, {
+        const res = await axios.put(`${baseURL}/api/Movie/${id}`, {
           Id: id,
           title: movieData.title,
           release_Date: new Date(date).toISOString(),

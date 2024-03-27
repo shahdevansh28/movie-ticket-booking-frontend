@@ -17,7 +17,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import { baseURL } from "../API";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
@@ -92,7 +92,7 @@ export default function SignUp() {
       console.log("Make request");
       try {
         const res = await axios.post(
-          "https://localhost:44397/api/Auth/Register",
+          `${baseURL}/api/Auth/Register`,
           {
             username: username,
             email: email,

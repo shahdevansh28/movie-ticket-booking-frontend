@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { baseURL } from "../../API";
 
 export default function UserProfile() {
   const [detail, setDetail] = useState([]);
@@ -28,7 +29,7 @@ export default function UserProfile() {
   const id = Cookies.get("userId");
   useEffect(() => {
     axios
-      .get(`https://localhost:44397/api/get-all-booking?userId=${id}`)
+      .get(`${baseURL}/api/get-all-booking?userId=${id}`)
       .then((response) => {
         console.log(response.data);
         setDetail(response.data);
@@ -37,7 +38,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:44397/api/Auth/getUser?userId=${id}`)
+      .get(`${baseURL}/api/Auth/getUser?userId=${id}`)
       .then((response) => {
         console.log(response.data);
         setUser(response.data);

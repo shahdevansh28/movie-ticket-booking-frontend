@@ -13,6 +13,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { TextField } from "@mui/material";
 import Swal from "sweetalert2";
+import { baseURL } from "../../API";
 
 export default function UpdateTheater() {
   let newObject = localStorage.getItem("theater");
@@ -50,14 +51,11 @@ export default function UpdateTheater() {
 
     if (!formDirty) {
       try {
-        const res = await axios.put(
-          `https://localhost:44397/api/Theater/${id}`,
-          {
-            Id: id,
-            name: theaterData.name,
-            location: theaterData.location,
-          }
-        );
+        const res = await axios.put(`${baseURL}/api/Theater/${id}`, {
+          Id: id,
+          name: theaterData.name,
+          location: theaterData.location,
+        });
         Swal.fire({
           position: "top-center",
           icon: "success",
