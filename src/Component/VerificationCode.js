@@ -16,6 +16,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
+import { baseURL } from "../API";
 
 export default function VerificationCode(props) {
   const queryParameters = new URLSearchParams(window.location.search);
@@ -47,7 +48,7 @@ export default function VerificationCode(props) {
     if (!formDirty) {
       try {
         const res = await axios.post(
-          "https://localhost:44397/api/Auth/verify-code",
+          `${baseURL}/api/Auth/verify-code`,
           {
             mail: email,
             codeByUser: details.code,
