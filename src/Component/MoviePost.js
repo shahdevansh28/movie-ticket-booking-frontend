@@ -29,17 +29,17 @@ export default function MoviePost(props) {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          backgroundColor:"transparent" 
+          backgroundColor: "transparent",
         }}
       >
-        <CardMedia
+        {/* <CardMedia
           component="div"
           sx={{
             // 16:9
             pt: "56.25%",
           }}
           image="https://source.unsplash.com/random?wallpapers"
-        />
+        /> */}
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h5" component="h2">
             {props.data.title}
@@ -59,7 +59,7 @@ export default function MoviePost(props) {
                 borderRadius: 30,
                 backgroundColor: "#FFBF00",
                 fontSize: "18px",
-                boxShadow :"none"
+                boxShadow: "none",
               }}
               variant="contained"
               color="success"
