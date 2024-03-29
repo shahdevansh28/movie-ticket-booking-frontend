@@ -91,26 +91,22 @@ export default function SignUp() {
       //Do Siginup
       console.log("Make request");
       try {
-        const res = await axios.post(
-          `${baseURL}/api/Auth/Register`,
-          {
-            username: username,
-            email: email,
-            password: password,
-          }
-        );
+        const res = await axios.post(`${baseURL}/api/Auth/Register`, {
+          username: username,
+          email: email,
+          password: password,
+        });
         //navigate(`/verify-code?mail=${data.get("email")}`);
         console.log(res);
         if (res.status === 200) {
           console.log("Email has been sent successfully");
           Swal.fire({
-            position: "top-end",
             icon: "success",
-            title: "Verification code has been sent to " + { email },
-            showConfirmButton: false,
-            timer: 2000,
+            title: "Verification Link has been sent to " + email,
+            text: "Please click on link in your email to verify your-self",
+            showConfirmButton: true,
           });
-          navigate(`/verify-code?mail=${email}`, { replace: true });
+          navigate("/login", { replace: true });
         } else {
           Swal.fire({
             icon: "error",
@@ -121,13 +117,20 @@ export default function SignUp() {
           window.location.reload();
         }
       } catch (err) {
-        Swal.fire({
-          icon: "error",
-          title: "Something went wrong",
-          showConfirmButton: true,
-          timer: 2000,
-        });
-
+        if (err.response.status === 409)
+          Swal.fire({
+            icon: "error",
+            title: "Username and email already exists.",
+            text: "Please Login...",
+            showConfirmButton: true,
+            confirmButtonText: "Login Here",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/login");
+            }
+          });
+        if (err.response.status === 500) {
+        }
         console.log(err.response.status);
       }
       return true;

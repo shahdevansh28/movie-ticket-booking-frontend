@@ -21,15 +21,43 @@ import UpdateShowTime from "./Component/ShowTime/UpdateShowTime";
 import MovieListPage from "./Component/MovieListPage";
 import ShowListPage from "./Component/ShowListPage";
 import PageNotFound from "./Component/PageNotFound";
+import { useEffect, useState } from "react";
+import Loader from "./Component/Loader";
+import axios from "axios";
 
 function App() {
+  const [load, setLoad] = useState(false);
+  useEffect(() => {
+    axios.interceptors.request.use(
+      (config) => {
+        setLoad(true);
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+
+    axios.interceptors.response.use(
+      (config) => {
+        setLoad(false);
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+  }, []);
+
   return (
     <BrowserRouter>
+      <Loader show={load} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/verify-code" element={<VerificationCode />} />
+        <Route path="Profile" element={<UserProfile />} />
         <Route path="/movies" element={<MovieListPage />} />
         <Route path="/showList" element={<ShowListPage />} />
         <Route path="/seatLayout" element={<SeatLayout />} />

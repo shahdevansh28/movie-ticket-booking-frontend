@@ -81,7 +81,7 @@ export default function SignIn() {
             Swal.fire({
               icon: "success",
               title: "Welcome...!!!",
-              text: "Username and password are correct...<br> Please Refresh the Home-page",
+              text: "Username and password are correct...",
             });
             // window.location.reload();
 
@@ -99,7 +99,7 @@ export default function SignIn() {
           Swal.fire({
             icon: "error",
             title: "Not Autherized",
-            text: "Unvalide username and password",
+            text: "Unvalide username and password"
           });
           setDetails({ username: "", password: "" });
         }

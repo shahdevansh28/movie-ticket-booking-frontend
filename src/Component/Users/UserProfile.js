@@ -6,11 +6,15 @@ import {
   TableHead,
   TableCell,
   TableRow,
+  Container,
+  Typography,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { baseURL } from "../../API";
+import NavBar from "../NavBar";
+import Footer from "../Footer";
 
 export default function UserProfile() {
   const [detail, setDetail] = useState([]);
@@ -29,7 +33,7 @@ export default function UserProfile() {
   const id = Cookies.get("userId");
   useEffect(() => {
     axios
-      .get(`${baseURL}/api/get-all-booking?userId=${id}`)
+      .get(`${baseURL}/api/getBookingByUser?userId=${id}`)
       .then((response) => {
         console.log(response.data);
         setDetail(response.data);
@@ -37,42 +41,47 @@ export default function UserProfile() {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`${baseURL}/api/Auth/getUser?userId=${id}`)
-      .then((response) => {
-        console.log(response.data);
-        setUser(response.data);
-      });
+    axios.get(`${baseURL}/api/Auth/getUser?userId=${id}`).then((response) => {
+      setUser(response.data);
+    });
   }, []);
 
   return (
-    <Grid>
-      <h2>Welcome {user.userName}</h2>
-
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell>Booking-Date</TableCell>
-            <TableCell>ShowTime Id</TableCell>
-            <TableCell>Seat ID</TableCell>
-            <TableCell>UserID</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {detail.map((data) => {
-            return (
+    <>
+      <NavBar />
+      <Container style={{ padding: "5rem" }}>
+        <Grid>
+          <Typography variant="h4">Welcome {user.userName}</Typography>
+          <Typography variant="h6" style={{ margin: "2rem" }}>
+            Your Bookings
+          </Typography>
+          <Table style={{ padding: "2rem" }}>
+            <TableHead>
               <TableRow>
-                <TableCell>{data.id}</TableCell>
-                <TableCell>{new Date(data.bookingDate).toDateString()}</TableCell>
-                <TableCell>{data.showTimeId}</TableCell>
-                <TableCell>{data.seatId}</TableCell>
-                <TableCell>{data.userId}</TableCell>
+                <TableCell>Id</TableCell>
+                <TableCell>Booking-Date</TableCell>
+                <TableCell>Payment Id</TableCell>
+                <TableCell>Order ID</TableCell>
+                <TableCell>Total Amount</TableCell>
               </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </Grid>
+            </TableHead>
+            <TableBody>
+              {detail.map((data) => {
+                return (
+                  <TableRow>
+                    <TableCell>{data.id}</TableCell>
+                    <TableCell>{data.orderDate}</TableCell>
+                    <TableCell>{data.razorPayPaymentId}</TableCell>
+                    <TableCell>{data.razorpayOrderID}</TableCell>
+                    <TableCell>{data.totalAmount}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Grid>
+      </Container>
+      <Footer />
+    </>
   );
 }

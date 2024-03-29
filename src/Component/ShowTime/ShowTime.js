@@ -43,7 +43,8 @@ export default function ShowTime() {
   //   const d = date.$y + "-" + (date.$M + 1) + "-" + date.$D
   //For validation
   const [amountError, setAmountError] = useState("");
-  const [capacityError, setCapacityError] = useState("");
+  const [rowError, setRowError] = useState("");
+  const [columnError, setColumnError] = useState("");
   const [movieError, setMovieError] = useState("");
   const [theaterError, setTheaterError] = useState("");
   //Fetches list of movies
@@ -96,16 +97,29 @@ export default function ShowTime() {
         formDirty = true;
       }
     }
-    if (!showtimeData.capacity || !showtimeData.capacity.length) {
-      setCapacityError("Enter Seating Capacity");
+    if (!showtimeData.row || !showtimeData.row.length) {
+      setRowError("Enter Total Rows");
       formDirty = true;
     } else {
       let regex = /^\d+$/;
-      let capacityRes = regex.test(showtimeData.capacity);
-      if (capacityRes) {
-        setCapacityError("");
+      let rowRes = regex.test(showtimeData.row);
+      if (rowRes) {
+        setRowError("");
       } else {
-        setCapacityError("Please enter numbers only");
+        setRowError("Please enter numbers only");
+        formDirty = true;
+      }
+    }
+    if (!showtimeData.column || !showtimeData.column.length) {
+      setColumnError("Enter Total Columns");
+      formDirty = true;
+    } else {
+      let regex = /^\d+$/;
+      let columnRes = regex.test(showtimeData.column);
+      if (columnRes) {
+        setColumnError("");
+      } else {
+        setColumnError("Please enter numbers only");
         formDirty = true;
       }
     }
@@ -113,11 +127,12 @@ export default function ShowTime() {
     if (!formDirty) {
       try {
         const res = await axios.post(`${baseURL}/api/ShowTime`, {
-          showDate: new Date(showDate).toISOString(),
+          showDate: showDate.toISOString().split("T")[0],
           startTime: new Date(startTime).toISOString(),
           endTime: new Date(endTime).toISOString(),
           amount: showtimeData.amount,
-          capacity: showtimeData.capacity,
+          row: showtimeData.row,
+          column: showtimeData.column,
           movieId: showtimeData.movieId,
           theaterId: showtimeData.theaterId,
         });
@@ -149,7 +164,7 @@ export default function ShowTime() {
     });
   }, []);
 
-  console.log(new Date(showDate).toISOString());
+  console.log(showDate.$y);
 
   const setData = (data) => {
     console.log(data);
@@ -257,17 +272,30 @@ export default function ShowTime() {
               helperText={amountError}
             />
             <TextField
-              margin="capacity"
+              margin="row"
               required
               fullWidth
-              name="capacity"
-              label="Capacity"
-              value={showtimeData.capacity}
+              name="row"
+              label="Rows"
+              value={showtimeData.row}
               onChange={onChangeInput}
-              id="capacity"
-              autoComplete="capacity"
-              error={capacityError && capacityError.length ? true : false}
-              helperText={capacityError}
+              id="row"
+              autoComplete="row"
+              error={rowError && rowError.length ? true : false}
+              helperText={rowError}
+            />
+            <TextField
+              margin="column"
+              required
+              fullWidth
+              name="column"
+              label="Columns"
+              value={showtimeData.column}
+              onChange={onChangeInput}
+              id="column"
+              autoComplete="column"
+              error={columnError && columnError.length ? true : false}
+              helperText={columnError}
             />
 
             <InputLabel id="movie-name">Select Movie</InputLabel>
@@ -314,7 +342,7 @@ export default function ShowTime() {
               variant="contained"
               sx={{ mt: 2 }}
             >
-              Add Movie
+              Add Show
             </Button>
 
             <Button
@@ -354,7 +382,7 @@ export default function ShowTime() {
                   {data.theater.name}, {data.theater.location}
                 </TableCell>
                 <TableCell>Rs. {data.amount}</TableCell>
-                <TableCell>{data.capacity} Seats</TableCell>
+                <TableCell>{data.row * data.column} Seats</TableCell>
                 <TableCell>{new Date(data.showDate).toDateString()}</TableCell>
                 <TableCell>
                   {new Date(data.startTime).toLocaleTimeString()}

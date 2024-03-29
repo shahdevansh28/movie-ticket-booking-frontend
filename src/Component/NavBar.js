@@ -25,6 +25,7 @@ export default function NavBar() {
     setAnchorEl(event.currentTarget);
   };
   const handleLogout = () => {
+    localStorage.clear();
     Cookies.remove("token");
     navigate("/");
     setAnchorEl(null);
