@@ -145,7 +145,7 @@ export default function ConfirmationPage(props) {
         }
       }
     } catch (err) {
-      if (err.status === 401) {
+      if (err.response.status === 401) {
         Swal.fire({
           title: "You are not looged in, Please Login",
           showDenyButton: true,
