@@ -99,7 +99,7 @@ export default function SignIn() {
           Swal.fire({
             icon: "error",
             title: "Not Autherized",
-            text: "Unvalide username and password"
+            text: "Unvalide username and password",
           });
           setDetails({ username: "", password: "" });
         }
