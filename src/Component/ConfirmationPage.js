@@ -211,7 +211,10 @@ export default function ConfirmationPage(props) {
         <Card sx={{ height: "100%", flexDirection: "column" }}>
           <CardContent sx={{ flexGrow: 1 }}>
             <Typography gutterBottom variant="h4" component="h4">
-              Movie - {movieData.title}
+              Movie - {orderDetails.totalAmount}
+            </Typography>
+            <Typography gutterBottom variant="h4" component="h4">
+              Total-Amount {movieData.title}
             </Typography>
             <Typography variant="h5" style={{ lineHeight: "40px" }}>
               Duration - {movieData.duration} mins <br />
