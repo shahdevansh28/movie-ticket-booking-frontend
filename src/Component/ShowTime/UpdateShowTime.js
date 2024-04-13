@@ -98,7 +98,7 @@ export default function UpdateShowTime() {
       try {
         const res = await axios.put(`${baseURL}/api/ShowTime/${id}`, {
           Id: id,
-          showDate: new Date(showDate).toISOString(),
+          showDate: showDate.toISOString().split("T")[0],
           startTime: new Date(startTime).toISOString(),
           endTime: new Date(endTime).toISOString(),
           amount: showData.amount,
